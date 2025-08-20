@@ -1,18 +1,18 @@
 # 📚 Library Management API
 
-A RESTful API for managing books and borrows in a library, built with Express, TypeScript, and MongoDB (Mongoose).
+A RESTful API for managing books and borrowing transactions in a library environment. Built with Express.js, TypeScript, and MongoDB (via Mongoose), the project uses a modular folder pattern—grouping configuration, feature modules, routing, and utilities—to keep concerns isolated and the codebase scalable.
 
 ---
 
 ## 🚀 Live Demo
 
-https://your-live-link.com
+[Server Live Link](https://library-management-system-nine-omega.vercel.app)
 
 ---
 
 ## 📖 Postman Documentation
 
-https://documenter.getpostman.com/view/your-postman-collection-id
+[Postman API Documentation](https://documenter.getpostman.com/view/40732284/2sB3BKG8qb)
 
 ---
 
@@ -83,3 +83,70 @@ PORT=8080
    ```
 
 ---
+
+# Library Management API
+
+A RESTful API for managing books and borrowing transactions in a library environment. Built with Express.js, TypeScript, and MongoDB (via Mongoose), the project uses a modular folder pattern—grouping configuration, feature modules, routing, and utilities—to keep concerns isolated and the codebase scalable.
+
+## Folder Structure
+
+```
+library-management-api/
+├── .env                   # Environment variables
+├── .gitignore             # Git exclusions
+├── README.md              # Project overview and setup
+├── metadata.json          # Project metadata
+├── package.json           # NPM scripts and dependencies
+├── pnpm-lock.yaml         # Locked dependency tree
+├── src/
+│  ├── app.ts              # Express app setup (middleware, routes, error handling)
+│  ├── app/
+│  │   ├── config/
+│  │   │   └── index.ts    # Load .env, configure database URI and port
+│  │   ├── modules/
+│  │   │   ├── books/      # Books feature module
+│  │   │   │   ├── books.interface.ts  # Book DTOs and TypeScript types
+│  │   │   │   ├── books.model.ts      # Mongoose schema and model
+│  │   │   │   ├── books.controller.ts # CRUD logic for books
+│  │   │   │   └── books.route.ts      # /books endpoints and validation
+│  │   │   └── borrow/     # Borrowing feature module
+│  │   │       ├── borrow.interface.ts
+│  │   │       ├── borrow.model.ts
+│  │   │       ├── borrow.controller.ts
+│  │   │       └── borrow.route.ts
+│  │   └── routes/
+│  │       └── index.ts    # Aggregate feature routers under /api
+│  ├── utils/
+│  │   └── generateISBN.ts # Helper to produce random, valid ISBNs
+│  └── server.ts           # HTTP server bootstrap (listen on configured port)
+└── tsconfig.json          # TypeScript compiler options
+```
+
+---
+
+## Key Components
+
+- **Configuration (`src/app/config`)**  
+  Centralizes environment loading and database connection setup.
+
+- **Modules (`src/app/modules`)**  
+  Each feature (books, borrow) lives in its own folder with:
+
+  - Interface definitions for request/response shapes.
+  - Mongoose models for data structure and validation.
+  - Controllers encapsulating business logic.
+  - Route definitions mapping HTTP methods to controller actions.
+
+- **Routing (`src/app/routes/index.ts`)**  
+  Mounts all module routers on a common `/api` path for consistent URL structure.
+
+- **App Initialization (`src/app.ts`)**  
+  Applies global middleware (JSON parsing, CORS), mounts routers, and handles errors.
+
+- **Server Bootstrap (`src/server.ts`)**  
+  Imports the configured Express app and starts listening on the port defined in `.env`.
+
+- **Utilities (`src/utils`)**  
+  Houses shared helper functions like ISBN generation to keep modules focused on core logic.
+
+#### Enjoy building and extending this library management API!
