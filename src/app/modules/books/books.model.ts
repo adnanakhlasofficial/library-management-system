@@ -4,9 +4,21 @@ import generateISBN from "../../utils/generateISBN";
 
 const bookSchema = new Schema<IBook>(
   {
-    title: { type: String, required: true, trim: true },
-    author: { type: String, required: true, trim: true },
-    copies: { type: Number, required: true },
+    title: {
+      type: String,
+      required: [true, "Book title is required"],
+      trim: true,
+    },
+    author: {
+      type: String,
+      required: [true, "Author name is required"],
+      trim: true,
+    },
+    copies: {
+      type: Number,
+      required: [true, "Number of copies is required"],
+      min: [1, "At least one copy is required"],
+    },
     available: { type: Boolean },
     description: { type: String, trim: true },
     genre: {
@@ -20,12 +32,13 @@ const bookSchema = new Schema<IBook>(
           "BIOGRAPHY",
           "FANTASY",
         ],
+        message:
+          "Genre must be one of: FICTION, NON_FICTION, SCIENCE, HISTORY, BIOGRAPHY, or FANTASY",
       },
     },
     isbn: {
       type: String,
-      required: [true, "ISBN ID is a required field."],
-      unique: [true, "ISBN ID Must be and unique number"],
+      unique: [true, "ISBN must be a unique number"],
       default: generateISBN,
     },
   },
@@ -35,6 +48,6 @@ const bookSchema = new Schema<IBook>(
   }
 );
 
-const Book = model("books", bookSchema);
+const Book = model<IBook>("Book", bookSchema);
 
 export default Book;
