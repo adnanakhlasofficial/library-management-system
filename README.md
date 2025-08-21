@@ -84,10 +84,6 @@ PORT=8080
 
 ---
 
-# Library Management API
-
-A RESTful API for managing books and borrowing transactions in a library environment. Built with Express.js, TypeScript, and MongoDB (via Mongoose), the project uses a modular folder pattern—grouping configuration, feature modules, routing, and utilities—to keep concerns isolated and the codebase scalable.
-
 ## Folder Structure
 
 ```
