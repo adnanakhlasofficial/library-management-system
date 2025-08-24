@@ -7,15 +7,15 @@ app.use(express.json());
 
 app.use(routes);
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("Welcome to Library Management System.");
+});
+
 app.use((req, res, next) => {
   res.status(404).json({
     success: false,
     message: `Route not found: ${req.originalUrl}`,
   });
+  next();
 });
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Library Management System.");
-});
-
 export default app;
