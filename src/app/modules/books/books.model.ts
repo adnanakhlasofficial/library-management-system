@@ -23,6 +23,7 @@ const bookSchema = new Schema<IBook>(
     description: { type: String, trim: true },
     genre: {
       type: String,
+      required: true,
       enum: {
         values: [
           "FICTION",
