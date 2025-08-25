@@ -19,17 +19,31 @@ export const createBook = async (req: Request, res: Response) => {
   }
 };
 
+export const countBooks = async (req: Request, res: Response) => {
+  try {
+    const totalBooks = await Book.countDocuments();
+    res.json({
+      success: true,
+      count: totalBooks,
+    });
+  } catch (error) {
+    res.json({ success: false, error });
+  }
+};
+
 export const getAllBooks = async (req: Request, res: Response) => {
   const {
     filter,
     sortBy = "createdAt",
     sort = "asc",
     limit = 10,
+    skip = 0,
   }: {
     filter?: string;
     sortBy?: string;
     sort?: "asc" | "desc";
     limit?: number;
+    skip?: number;
   } = req.query;
 
   const filterQuery = filter ? { genre: filter } : {};
@@ -37,7 +51,8 @@ export const getAllBooks = async (req: Request, res: Response) => {
   try {
     const data = await Book.find(filterQuery)
       .sort([[sortBy, sort]])
-      .limit(limit);
+      .limit(limit)
+      .skip(skip);
     res.json({
       success: true,
       message: "Books retrieved successfully",
